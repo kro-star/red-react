@@ -1,24 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import {useDispatch} from 'react-redux';
+
+import {addProduct} from './store/productSlice';
+import ProductList from './components/ProductList';
+import InputField from './components/InputField';
 
 function App() {
+  
+  const [namePr, setNamePr] = useState('');
+  const [price, setPrice] = useState('');
+
+  const dispatch = useDispatch();
+
+
+  const addNewProduct = () => {
+    const products = dispatch(addProduct({namePr, price}));
+    setNamePr('');
+    setPrice('');
+  }
+
+  
+  const delProduct = (idProduct) =>{
+   // setProducts(products.filter(product => product.id !== idProduct));
+  }
+
+  const editProduct = (idProduct) => {
+
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div>
+      <InputField namePr={namePr} price={price} addProduct={addNewProduct} setNamePr={setNamePr} setPrice={setPrice}/>
+     <ProductList  editProduct={editProduct} delProduct={delProduct}/>
+	</div>
   );
 }
 
